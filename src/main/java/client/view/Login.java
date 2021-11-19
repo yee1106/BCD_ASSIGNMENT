@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package client.view;
 
-import classes.User;
+import model.User;
 import static client.Main.current_user;
 import static client.Main.register;
 import java.io.FileInputStream;

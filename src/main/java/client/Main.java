@@ -1,8 +1,8 @@
 package client;
 
-import classes.User;
-import model.Login;
-import model.Register;
+import model.User;
+import client.view.Login;
+import client.view.Register;
 
 public class Main {
     public static Register register;
