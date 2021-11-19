@@ -19,7 +19,7 @@ public class KeyPairMaker {
     public KeyPairMaker() {
         try {
             keygen = KeyPairGenerator.getInstance( Configuration.PUBLICKEY_ALGORITHM );
-            keygen.initialize( 1024 );
+            keygen.initialize( 1024 , new SecureRandom() );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,7 +28,7 @@ public class KeyPairMaker {
     /**
      * create()
      */
-    public static void create() {
+    public static void create(String hashUserName) {
         try {
             //KeyPairMaker object
             KeyPairMaker maker = new KeyPairMaker();
@@ -46,8 +46,8 @@ public class KeyPairMaker {
                     Base64.getEncoder().encodeToString( prikey.getEncoded() ) );
 
             //keystore
-            put( pubkey.getEncoded(), Configuration.PUBLICKEY_FILE);
-            put( prikey.getEncoded(), Configuration.PRIVATEKEY_FILE );
+            put( pubkey.getEncoded(), Configuration.KEY_PAIR_FILE_PATH + hashUserName + Configuration.PUBLICKEY );
+            put( prikey.getEncoded(), Configuration.KEY_PAIR_FILE_PATH + hashUserName + Configuration.PRIVATEKEY );
 
         } catch (Exception e) {
             e.printStackTrace();
