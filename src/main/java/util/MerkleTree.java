@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MerkleTree {
 
-    private List<String> tranxLst;
+    private List<Object> tranxLst;
     private String root = "0";
 
     public String getRoot() {
@@ -27,7 +27,7 @@ public class MerkleTree {
      *
      * @param tranxLst
      */
-    private MerkleTree(List<String> tranxLst) {
+    private MerkleTree(List<Object> tranxLst) {
         super();
         this.tranxLst = tranxLst;
     }
@@ -35,7 +35,7 @@ public class MerkleTree {
      * Design pattern: Singleton
      */
     private static MerkleTree instance;
-    public static MerkleTree getInstance( List<String> tranxLst ) {
+    public static MerkleTree getInstance( List<Object> tranxLst ) {
         if( instance == null ) {
             return new MerkleTree(tranxLst);
         }
@@ -51,15 +51,15 @@ public class MerkleTree {
      */
     public void build() {
 
-        List<String> tempLst = new ArrayList<>();
+        List<Object> tempLst = new ArrayList<>();
 
-        for (String tranx : this.tranxLst) {
+        for (Object tranx : this.tranxLst) {
             tempLst.add(tranx);
         }
 
         List<String> hashes = genTranxHashLst( tempLst );
         while(  hashes.size() != 1 ) {
-            hashes = genTranxHashLst( hashes );
+            hashes = genTranxHashLst1( hashes );
         }
         this.root = hashes.get(0);
     }
@@ -71,7 +71,25 @@ public class MerkleTree {
      * @implSpec
      * - genTranxHashLst(List<String>) : List<String>
      */
-    private List<String> genTranxHashLst(List<String> tranxLst) {
+    private List<String> genTranxHashLst(List<Object> tranxLst) {
+        List<String> hashLst = new ArrayList<>();
+        int i = 0;
+        while( i < tranxLst.size() ) {
+
+            Object left = tranxLst.get(i);
+            i++;
+
+            Object right = "";
+            if( i != tranxLst.size() ) right = tranxLst.get(i);
+
+            String hash = Hasher.hash(String.valueOf(left).concat(String.valueOf(right)) , "SHA-256");
+            hashLst.add(hash);
+            i++;
+        }
+        return hashLst;
+    }
+
+    private List<String> genTranxHashLst1(List<String> tranxLst) {
         List<String> hashLst = new ArrayList<>();
         int i = 0;
         while( i < tranxLst.size() ) {
@@ -88,7 +106,6 @@ public class MerkleTree {
         }
         return hashLst;
     }
-
 
 
 }

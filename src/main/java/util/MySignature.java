@@ -4,6 +4,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.Signature;
 import java.util.Base64;
+import util.KeyCreator.KeyAccess;
 
 public class MySignature {
 
@@ -19,19 +20,20 @@ public class MySignature {
      */
     private KeyPairGenerator keygen;
     private KeyPair keyPair;
-    {
-        try {
-            keygen = KeyPairGenerator.getInstance(CRYPTO_ALGORITHM);
-            keyPair = keygen.generateKeyPair();
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
+//    {
+//        try {
+//            keygen = KeyPairGenerator.getInstance(CRYPTO_ALGORITHM);
+//            keyPair = keygen.generateKeyPair();
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//        }
+//    }
     //END: DEMO
 
-    public MySignature() {
+    public MySignature(String hashUsername) {
         try {
-            signature = Signature.getInstance( "SHA256WithRSA" );
+          keyPair = new KeyPair(KeyAccess.getPublicKey(hashUsername), KeyAccess.getPrivateKey(hashUsername));
+          signature = Signature.getInstance( "SHA256WithRSA" );
         } catch (Exception e) {
             e.printStackTrace();
         }

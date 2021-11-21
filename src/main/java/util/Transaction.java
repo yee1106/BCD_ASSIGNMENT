@@ -6,18 +6,26 @@ import java.util.List;
 
 public class Transaction implements Serializable{
 
-    private final int SIZE = 5;
+    private final int SIZE = 10;
 
     //array or collection
     //String[] tranxLst;
-    List<String> tranxLst; //simple demo...
+    List<Object> tranxLst; //simple demo...
 
     public Transaction() {
         tranxLst = new ArrayList<>( SIZE );
     }
 
+    public List<Object> getTranxLst() {
+      return tranxLst;
+    }
+
+    public void setTranxLst(List<Object> tranxLst) {
+      this.tranxLst = tranxLst;
+    }
+
     //add( String ) : void
-    public void add( String tranx ){
+    public void add( Object tranx ){
         tranxLst.add(tranx);
     }
 

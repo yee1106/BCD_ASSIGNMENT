@@ -11,14 +11,18 @@ import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 
 import com.google.gson.GsonBuilder;
+import java.io.File;
+import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Blockchain {
 
     //master-binary-filename
-    private static final String CHAIN_FILE 		= 	"master/chain.bin";
+    private static final String CHAIN_FILE 		= 	"master/blockchain.bin";
 
     //data-structure
-    private static final LinkedList<Block> DB 	= 	new LinkedList<>();
+    public static LinkedList<Block> DB 	= 	new LinkedList<>();
 
     //ledger-filename
     private static final String LEDGER_FILE		=	"ledger.txt";
@@ -35,14 +39,22 @@ public class Blockchain {
          * Helper classes for persisting the object (LinkedList) to the binary-file
          * 	1) FileOutputStream; 2) ObjectOutputStream
          */
+        Path path = Paths.get(CHAIN_FILE);
+        try {
+          Files.createDirectories(path.getParent());
+          if( !Files.exists(path))
+              Files.createFile(path);
+        } catch (IOException ex) {
+          System.out.println("BlockChain file doen't exist!!");
+        }
         try(
-                FileOutputStream fos = new FileOutputStream( CHAIN_FILE );
-                ObjectOutputStream out = new ObjectOutputStream( fos );
+          FileOutputStream fos = new FileOutputStream( new File(CHAIN_FILE));
+          ObjectOutputStream out = new ObjectOutputStream( fos );
         ) {
             out.writeObject( DB );
             System.out.println( ">>> Master file updated!" );
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("BlockChain file doen't exist!!");
         }
     }
 
@@ -56,11 +68,20 @@ public class Blockchain {
                 FileInputStream fis = new FileInputStream( CHAIN_FILE );
                 ObjectInputStream in = new ObjectInputStream( fis );
         ) {
-            return (LinkedList<Block>) in.readObject();
-        } catch (IOException | ClassNotFoundException e  ) {
-            e.printStackTrace();
-            return null;
+          DB = (LinkedList<Block>) in.readObject();
+        } catch (ClassNotFoundException e ) {
+            
         }
+        catch(IOException e){
+          if(DB.size() == 0){
+            Block genesis = new Block( "0" );
+            Blockchain.nextBlock(genesis);  
+            Blockchain.distribute();
+          }
+        }
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson( DB ));
+        
+        return DB;
     }
 
     //distribute() : printout the ledger records (demo)

@@ -5,8 +5,15 @@
  */
 package client.view;
 
-import model.User;
+import static client.Main.addOrderPage;
+import static client.Main.CLINIC_HEALTHCARE;
+import static client.Main.DISTRIBUTION;
+import static client.Main.MANUFACTURER;
+import static client.Main.VACINATOR;
+import static client.Main.clinic_healthcare;
 import static client.Main.current_user;
+import static client.Main.userList;
+import model.User;
 import static client.Main.register;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,6 +54,7 @@ public class Login extends javax.swing.JFrame {
     passwordTextField = new javax.swing.JPasswordField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
 
     jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -170,7 +178,10 @@ public class Login extends javax.swing.JFrame {
   private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
     if(!usernameTextField.getText().isEmpty() && !String.valueOf(passwordTextField.getPassword()).isEmpty()){
       if(isUserExist(usernameTextField.getText(), String.valueOf(passwordTextField.getPassword()))){
-          JOptionPane.showMessageDialog(null, current_user.getRole()+ " Success!!");
+          JOptionPane.showMessageDialog(null, current_user.getUserName()+ ", login Success!!");
+          pageDisplayAfterLogin();
+          readAllUser();
+          this.setVisible(false);
           resetLogin();
       }
       else{
@@ -182,6 +193,35 @@ public class Login extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_loginButtonActionPerformed
 
+  public void readAllUser(){
+    FileInputStream fileinput;
+    try {
+      fileinput = new FileInputStream("register.txt");
+      Scanner fileRow = new Scanner(fileinput);
+      while(fileRow.hasNext()){
+       String[] split_name = fileRow.nextLine().split(" \\|\\| ");
+       userList.put(split_name[0], split_name[1]);
+      }
+    } catch (FileNotFoundException ex) {}
+  }
+  
+  public void pageDisplayAfterLogin(){
+    if(CLINIC_HEALTHCARE.equals(current_user.getRole())){
+        clinic_healthcare = new Clinic_Healthcare_UI();
+        clinic_healthcare.configureOrderTable();
+        clinic_healthcare.setVisible(true);
+        addOrderPage = new Add_Order();
+      }
+    else if(VACINATOR.equals(current_user.getRole())){
+      
+    }
+    else if(MANUFACTURER.equals(current_user.getRole())){
+      
+    }
+    else if(DISTRIBUTION.equals(current_user.getRole())){
+       
+    }
+  }
   public void resetLogin(){
     usernameTextField.setText("");
     passwordTextField.setText("");
