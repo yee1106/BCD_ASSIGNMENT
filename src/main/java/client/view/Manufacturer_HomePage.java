@@ -5,17 +5,36 @@
  */
 package client.view;
 
+import static client.Main.current_user;
+import static client.Main.track_view;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import model.ComfirmOrder;
+import model.Order;
+import model.ReadyShippingDetails;
+import util.Block;
+import util.Blockchain;
+
 /**
  *
  * @author acer
  */
 public class Manufacturer_HomePage extends javax.swing.JFrame {
 
-  /**
-   * Creates new form Manufacturer_HomePage
-   */
+  DefaultTableModel tableModel;
+  Object rowData[] = new Object[4];
+  List<Block> currentUserInvolvedBlock;
+  public Block selectedBlock;
+  
   public Manufacturer_HomePage() {
     initComponents();
+    tableModel = (DefaultTableModel) orderTable.getModel();
   }
 
   /**
@@ -27,25 +46,195 @@ public class Manufacturer_HomePage extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    jPanel1 = new javax.swing.JPanel();
+    jLabel1 = new javax.swing.JLabel();
+    trackButton = new javax.swing.JButton();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    orderTable = new javax.swing.JTable();
+
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+    jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
+    jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+    jLabel1.setForeground(new java.awt.Color(255, 204, 204));
+    jLabel1.setText("Manufacturer HomePage");
+
+    trackButton.setBackground(new java.awt.Color(153, 255, 153));
+    trackButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+    trackButton.setText("Update & Track");
+    trackButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        trackButtonActionPerformed(evt);
+      }
+    });
+
+    orderTable.setBackground(new java.awt.Color(255, 255, 204));
+    orderTable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    orderTable.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][] {
+
+      },
+      new String [] {
+        "Order Batch ID", "Vaccine Type", "Quantity", "Order By"
+      }
+    ) {
+      boolean[] canEdit = new boolean [] {
+        false, false, false, false
+      };
+
+      public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return canEdit [columnIndex];
+      }
+    });
+    orderTable.setRowHeight(32);
+    orderTable.getTableHeader().setReorderingAllowed(false);
+    jScrollPane1.setViewportView(orderTable);
+
+    javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+    jPanel1.setLayout(jPanel1Layout);
+    jPanel1Layout.setHorizontalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGap(134, 134, 134)
+        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap(140, Short.MAX_VALUE))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(trackButton)
+        .addGap(85, 85, 85))
+      .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+          .addGap(68, 68, 68)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 585, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(85, Short.MAX_VALUE)))
+    );
+    jPanel1Layout.setVerticalGroup(
+      jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGap(31, 31, 31)
+        .addComponent(jLabel1)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+        .addComponent(trackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(33, 33, 33))
+      .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+          .addGap(92, 92, 92)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(92, Short.MAX_VALUE)))
+    );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 400, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGap(0, 300, Short.MAX_VALUE)
+      .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
-  /**
-   * @param args the command line arguments
-   */
+  private void trackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_trackButtonActionPerformed
+  boolean hasInvolvedBlock = false;
+  boolean isComfirmOrder = false;
+  boolean isReadyShippingStep = false;
+  boolean isUpdatedButtonVisible = false;
+    int selectedRowIndex = orderTable.getSelectedRow();
+    if(selectedRowIndex == -1 && currentUserInvolvedBlock.size() != 0){
+      orderTable.setRowSelectionInterval(0, 0);
+      selectedRowIndex = 0;
+    }
+    for(Block block : currentUserInvolvedBlock){
+      if(block.getHeader().getBatch_id() == (Long)orderTable.getValueAt(selectedRowIndex, 0)){
+        selectedBlock = block;
+        String data = "";
+        for(Object statusTranx : block.getTranx().getTranxLst()){
+          if(statusTranx instanceof Order){
+             data = data + ((Order) statusTranx).statusTrackToString()+ "\n";
+             track_view.setInfoTrackText(((Order) statusTranx).manufacturerInfoTrackToString());
+          }
+          else if(statusTranx instanceof ComfirmOrder){
+            data = data + ((ComfirmOrder) statusTranx).statusTrackToString()+ "\n";
+            isComfirmOrder = true;
+            String status = ((ComfirmOrder) statusTranx).getStatus();
+            if(!track_view.REJECTER_ORDER.equals(status)){
+              isUpdatedButtonVisible = true;
+            }
+         }
+          else if(statusTranx instanceof ReadyShippingDetails){
+            data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
+            isReadyShippingStep = true;
+          }
+        }
+        track_view.setStatusTrackText(data);
+        hasInvolvedBlock = true;
+        break;
+      }
+     }
+     if(hasInvolvedBlock){
+      this.setVisible(false);
+      track_view.setVisible(true);
+      track_view.setComeFromPage(this, true);
+      if(isComfirmOrder){
+        track_view.setButtonVisible(false);
+        track_view.setUpdateTrackButtonVisible(isUpdatedButtonVisible);
+      }
+      if(isReadyShippingStep){
+        track_view.setUpdateTrackButtonVisible(!isReadyShippingStep);
+      }
+     }
+     else if(!hasInvolvedBlock){
+       JOptionPane.showMessageDialog(null, "No Record!!", "Error Message", JOptionPane.ERROR_MESSAGE); 
+     }
+     else if(orderTable.getSelectedRow() == -1){
+       JOptionPane.showMessageDialog(null, "Please select one record!!", "Error Message", JOptionPane.ERROR_MESSAGE); 
+     }    
+  }//GEN-LAST:event_trackButtonActionPerformed
+
+  public void configureOrderTable(){
+    productDetailTableSortByProductId();
+    List<Block> blockchain = Blockchain.DB;
+    currentUserInvolvedBlock = new ArrayList();
+    blockchain.forEach(block ->{
+      if(block.getHeader().getInvolvedPerson() != null){
+        for(String userName : block.getHeader().getInvolvedPerson()){
+          if(userName.equals(current_user.getUserName())){
+            currentUserInvolvedBlock.add(block);
+            rowData[0] = block.getHeader().getBatch_id();
+            for(Object orderDetails : block.getTranx().getTranxLst()){
+              if(orderDetails instanceof Order){
+                rowData[1] = ((Order) orderDetails).getVaccineType();
+                rowData[2] = ((Order) orderDetails).getQuantity();
+                rowData[3] = ((Order) orderDetails).getFrom();
+                tableModel.addRow(rowData);
+                break;
+              }
+            }
+            break;
+          }
+        }
+      }
+    });
+    if(orderTable.getRowCount()>0)
+      orderTable.setRowSelectionInterval(0,0);
+  }
+  
+  private void productDetailTableSortByProductId(){
+    TableRowSorter<TableModel> sorter = new TableRowSorter<>(tableModel);
+    orderTable.setRowSorter(sorter);
+    ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<>();
+    //sort based on product name
+    int columnIndexToSort = 0;
+    sortKeys.add(new RowSorter.SortKey(columnIndexToSort, SortOrder.DESCENDING));
+    sorter.setSortKeys(sortKeys);
+    sorter.sort();
+  }
+  
   public static void main(String args[]) {
     /* Set the Nimbus look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -79,5 +268,10 @@ public class Manufacturer_HomePage extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JLabel jLabel1;
+  private javax.swing.JPanel jPanel1;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JTable orderTable;
+  private javax.swing.JButton trackButton;
   // End of variables declaration//GEN-END:variables
 }

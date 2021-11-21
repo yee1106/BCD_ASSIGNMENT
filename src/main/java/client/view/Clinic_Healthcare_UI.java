@@ -23,7 +23,9 @@ import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import model.ComfirmOrder;
 import model.Order;
+import model.ReadyShippingDetails;
 import util.Block;
 import util.Blockchain;
 
@@ -77,9 +79,9 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
 
     jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
-    jLabel1.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
+    jLabel1.setFont(new java.awt.Font("Tahoma", 3, 36)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(204, 204, 255));
-    jLabel1.setText("Order & Track Vaccine");
+    jLabel1.setText("Retailer Order & Track Vaccine");
 
     addOrderButton.setBackground(new java.awt.Color(204, 255, 204));
     addOrderButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -142,22 +144,22 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(52, 52, 52))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(242, 242, 242))))
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(125, 125, 125))))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGap(34, 34, 34)
+        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(156, 156, 156)
+            .addGap(72, 72, 72)
             .addComponent(addOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(31, 31, 31)
             .addComponent(track_view_button, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(29, 29, 29)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(42, 42, 42)
+            .addGap(37, 37, 37)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap(83, Short.MAX_VALUE))
     );
@@ -178,6 +180,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void addOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOrderButtonActionPerformed
+    addOrderPage.resetManufacturerComboBox();
     for (Map.Entry<String, String> user: userList.entrySet()){
        if(MANUFACTURER.equals(user.getValue())){
          addOrderPage.setManufacturerComboBox(user.getKey());
@@ -189,28 +192,35 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
 
   private void track_view_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_track_view_buttonActionPerformed
    boolean hasInvolvedBlock = false;
-   if(currentUserInvolvedBlock.size() == 1){
-     orderTable.setRowSelectionInterval(0, 0);
-   }
    int selectedRowIndex = orderTable.getSelectedRow();
+   if(selectedRowIndex == -1 && currentUserInvolvedBlock.size() != 0){
+     orderTable.setRowSelectionInterval(0, 0);
+     selectedRowIndex = 0;
+   }
    for(Block block : currentUserInvolvedBlock){
      if(block.getHeader().getBatch_id() == (Long)orderTable.getValueAt(selectedRowIndex, 0)){
        String data = "";
-       for(Object orderDetails : block.getTranx().getTranxLst()){
-         if(orderDetails instanceof Order){
-            data = ((Order) orderDetails).statusTrackToString();
-            track_view.setStatusTrackText(data);
-            track_view.setInfoTrackText(((Order) orderDetails).infoTrackToString());
+       for(Object statusTranx : block.getTranx().getTranxLst()){
+         if(statusTranx instanceof Order){
+            data = data + ((Order) statusTranx).statusTrackToString() + "\n";
+            track_view.setInfoTrackText(((Order) statusTranx).infoTrackToString());
          }
+         else if(statusTranx instanceof ComfirmOrder){
+            data = data + ((ComfirmOrder) statusTranx).statusTrackToString() + "\n";
+         }
+         else if(statusTranx instanceof ReadyShippingDetails){
+            data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
+          }
        }
+       track_view.setStatusTrackText(data);
        hasInvolvedBlock = true;
        break;
      }
    }
    if(hasInvolvedBlock){
+    track_view.setComeFromPage(this, false);
     this.setVisible(false);
     track_view.setVisible(true);
-    track_view.setComeFromPage(this);
    }
    else if(!hasInvolvedBlock){
      JOptionPane.showMessageDialog(null, "No Record!!", "Error Message", JOptionPane.ERROR_MESSAGE); 

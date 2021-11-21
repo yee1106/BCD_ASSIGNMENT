@@ -12,9 +12,11 @@ import static client.Main.MANUFACTURER;
 import static client.Main.VACINATOR;
 import static client.Main.clinic_healthcare;
 import static client.Main.current_user;
+import static client.Main.manufacturerHomePage;
 import static client.Main.userList;
 import model.User;
 import static client.Main.register;
+import static client.Main.update_production_status;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -216,7 +218,10 @@ public class Login extends javax.swing.JFrame {
       
     }
     else if(MANUFACTURER.equals(current_user.getRole())){
-      
+      manufacturerHomePage = new Manufacturer_HomePage();
+      manufacturerHomePage.configureOrderTable();
+      manufacturerHomePage.setVisible(true);
+      update_production_status = new Update_Production_Status();
     }
     else if(DISTRIBUTION.equals(current_user.getRole())){
        

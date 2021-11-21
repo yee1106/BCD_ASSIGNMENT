@@ -112,4 +112,8 @@ public class Order implements Serializable{
     return "order_batch_id = " + order_batch_id +"\nVaccineType = " + vaccineType + "\nQuantity = " + quantity + "\nManufacturer = " + to + "\n";
   }
   
+  public String manufacturerInfoTrackToString() {
+    return "order_batch_id = " + order_batch_id +"\nVaccineType = " + vaccineType + "\nQuantity = " + quantity + "\nClinic / Healthcare = " + from + "\n";
+  }
+  
 }

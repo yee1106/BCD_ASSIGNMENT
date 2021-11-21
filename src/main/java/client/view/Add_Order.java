@@ -14,6 +14,7 @@ import static client.Main.current_user;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import model.Order;
 import util.Block;
@@ -28,7 +29,7 @@ public class Add_Order extends javax.swing.JFrame {
   /**
    * Creates new form Add_Order
    */
-  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
   
   public Add_Order() {
     initComponents();
@@ -198,7 +199,7 @@ public class Add_Order extends javax.swing.JFrame {
       int option = JOptionPane.showConfirmDialog(null, "Comfirm place order?", "Order Comfirmation", 
                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
       if (JOptionPane.YES_OPTION == option) {
-        configureBlock();
+        configCreateBlock();
         JOptionPane.showMessageDialog(null, "Order Successful!!"); 
         quantityTextField.setText("");
         this.setVisible(false);
@@ -210,7 +211,7 @@ public class Add_Order extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_submitButtonActionPerformed
 
-  private void configureBlock(){
+  private void configCreateBlock(){
     Order order = createOrder();
     
     String hashUserName = Hasher.hash(current_user.getUserName(), "SHA-256");
@@ -235,8 +236,13 @@ public class Add_Order extends javax.swing.JFrame {
                             , manufacturerComboBox.getSelectedItem().toString(), "Pending Order", dateFormat.format(today));
     return order;
   }
-  void setManufacturerComboBox(String item) {
+  
+  public void setManufacturerComboBox(String item) {
     manufacturerComboBox.addItem(item);
+  }
+  
+  public void resetManufacturerComboBox(){
+    manufacturerComboBox.removeAllItems();
   }
   /**
    * @param args the command line arguments

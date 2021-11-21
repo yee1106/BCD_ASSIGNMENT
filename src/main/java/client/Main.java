@@ -4,8 +4,10 @@ import client.view.Add_Order;
 import client.view.Clinic_Healthcare_UI;
 import model.User;
 import client.view.Login;
+import client.view.Manufacturer_HomePage;
 import client.view.Register;
 import client.view.Track_View;
+import client.view.Update_Production_Status;
 import java.util.HashMap;
 import util.Blockchain;
 
@@ -18,6 +20,8 @@ public class Main {
     public static Track_View track_view = new Track_View();
     public static Clinic_Healthcare_UI clinic_healthcare;
     public static Add_Order addOrderPage = new Add_Order();
+    public static Manufacturer_HomePage manufacturerHomePage;
+    public static Update_Production_Status update_production_status;
     public static String VACINATOR = "Vacinator";
     public static String MANUFACTURER = "Manufacturer";
     public static String DISTRIBUTION = "Distribution";

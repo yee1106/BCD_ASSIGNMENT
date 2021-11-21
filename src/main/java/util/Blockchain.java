@@ -12,6 +12,7 @@ import java.util.LinkedList;
 
 import com.google.gson.GsonBuilder;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ public class Blockchain {
     }
 
     //persist() : write the chain to the master-file
-    private static void persist() {
+    public static void persist() {
         /**
          * Helper classes for persisting the object (LinkedList) to the binary-file
          * 	1) FileOutputStream; 2) ObjectOutputStream
@@ -69,16 +70,15 @@ public class Blockchain {
                 ObjectInputStream in = new ObjectInputStream( fis );
         ) {
           DB = (LinkedList<Block>) in.readObject();
-        } catch (ClassNotFoundException e ) {
-            
-        }
-        catch(IOException e){
+        } 
+        catch(FileNotFoundException e){
           if(DB.size() == 0){
             Block genesis = new Block( "0" );
             Blockchain.nextBlock(genesis);  
             Blockchain.distribute();
           }
-        }
+        }catch(Exception ex){}
+        
         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson( DB ));
         
         return DB;
@@ -97,7 +97,7 @@ public class Blockchain {
                     chain.getBytes(),
                     StandardOpenOption.CREATE);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 
