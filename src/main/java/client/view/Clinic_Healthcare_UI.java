@@ -60,6 +60,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     orderTable = new javax.swing.JTable();
     track_view_button = new javax.swing.JButton();
+    jButton4 = new javax.swing.JButton();
 
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -129,6 +130,16 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
       }
     });
 
+    jButton4.setBackground(new java.awt.Color(255, 102, 102));
+    jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logoutIcon.png"))); // NOI18N
+    jButton4.setText(" Log Out");
+    jButton4.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton4ActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
     jPanel1Layout.setHorizontalGroup(
@@ -139,7 +150,8 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
               .addComponent(addOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(track_view_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+              .addComponent(track_view_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGap(86, 86, 86)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(52, 52, 52))
@@ -157,7 +169,9 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
             .addGap(72, 72, 72)
             .addComponent(addOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(31, 31, 31)
-            .addComponent(track_view_button, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(track_view_button, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(66, 66, 66)
+            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(37, 37, 37)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -230,6 +244,10 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
    }
    
   }//GEN-LAST:event_track_view_buttonActionPerformed
+
+  private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    System.exit(0);
+  }//GEN-LAST:event_jButton4ActionPerformed
 
   public void configureOrderTable(){
     productDetailTableSortByProductId();
@@ -314,6 +332,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton addOrderButton;
+  private javax.swing.JButton jButton4;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JScrollPane jScrollPane1;

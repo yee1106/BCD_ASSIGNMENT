@@ -9,18 +9,24 @@ import static client.Main.addOrderPage;
 import static client.Main.CLINIC_HEALTHCARE;
 import static client.Main.DISTRIBUTION;
 import static client.Main.MANUFACTURER;
-import static client.Main.VACINATOR;
+import static client.Main.PATIENT;
 import static client.Main.clinic_healthcare;
 import static client.Main.current_user;
 import static client.Main.manufacturerHomePage;
+import static client.Main.patient_appointment_info;
+import static client.Main.patient_view;
 import static client.Main.userList;
 import model.User;
 import static client.Main.register;
 import static client.Main.update_production_status;
+import static client.Main.patient_info;
+import static client.Main.patient_track;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import model.Patient;
 import util.Hasher;
 
 /**
@@ -214,8 +220,14 @@ public class Login extends javax.swing.JFrame {
         clinic_healthcare.setVisible(true);
         addOrderPage = new Add_Order();
       }
-    else if(VACINATOR.equals(current_user.getRole())){
-      
+    else if(PATIENT.equals(current_user.getRole())){
+      getPatientRecord();
+      System.out.println(patient_info);
+      patient_view = new Patient_View();
+      patient_view.configurePatientPage();
+      patient_appointment_info = new Patient_Appointment_Info();
+      patient_track = new Patient_Track();
+      patient_view.setVisible(true);
     }
     else if(MANUFACTURER.equals(current_user.getRole())){
       manufacturerHomePage = new Manufacturer_HomePage();
@@ -227,6 +239,31 @@ public class Login extends javax.swing.JFrame {
        
     }
   }
+  
+  public void getPatientRecord(){
+    patient_info = new ArrayList();
+    FileInputStream fileinput;
+    try {
+      fileinput = new FileInputStream("Patient_Info.txt");
+      Scanner fileRow = new Scanner(fileinput);
+      while(fileRow.hasNext()){
+       Patient patient = new Patient();
+       patient.setUserName(fileRow.nextLine());
+       patient.setStatus(fileRow.nextLine());
+       patient.setBatch_id(Integer.valueOf(fileRow.nextLine()));
+       patient.setFullName(fileRow.nextLine());
+       patient.setAge(fileRow.nextLine());
+       patient.setGender(fileRow.nextLine());
+       patient.setIc(fileRow.nextLine());
+       patient.setContactNumber(fileRow.nextLine());
+       patient.setAddress(fileRow.nextLine());
+       fileRow.nextLine();
+       patient_info.add(patient);
+      }
+      fileRow.close();
+    } catch (FileNotFoundException ex) {}
+  }
+  
   public void resetLogin(){
     usernameTextField.setText("");
     passwordTextField.setText("");

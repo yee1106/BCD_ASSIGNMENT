@@ -75,7 +75,7 @@ public class Register extends javax.swing.JFrame {
 
     roleComboBox.setBackground(new java.awt.Color(255, 204, 204));
     roleComboBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    roleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vacinator", "Manufacturer", "Distribution", "Clinic / Healthcare" }));
+    roleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Patient", "Manufacturer", "Distribution", "Clinic / Healthcare" }));
 
     jLabel5.setBackground(new java.awt.Color(255, 255, 255));
     jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
