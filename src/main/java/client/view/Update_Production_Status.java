@@ -63,15 +63,17 @@ public class Update_Production_Status extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
 
-    jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+    jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(255, 204, 204));
     jLabel1.setText("Update Production Status");
 
     goBackLable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    goBackLable.setForeground(new java.awt.Color(255, 153, 153));
     goBackLable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goBackIcon.png"))); // NOI18N
     goBackLable.setText("Go back");
+    goBackLable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 102)));
     goBackLable.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
         goBackLableMouseReleased(evt);
@@ -208,7 +210,6 @@ public class Update_Production_Status extends javax.swing.JFrame {
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(88, 88, 88)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(distributionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel6))

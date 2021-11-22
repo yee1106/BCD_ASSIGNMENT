@@ -69,7 +69,7 @@ public class Track_View extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
 
-    jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+    jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 3, 36)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(204, 204, 255));
@@ -83,8 +83,10 @@ public class Track_View extends javax.swing.JFrame {
     jScrollPane1.setViewportView(statusTrackTextArea);
 
     goBackLable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    goBackLable.setForeground(new java.awt.Color(153, 255, 255));
     goBackLable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goBackIcon.png"))); // NOI18N
     goBackLable.setText("Go back");
+    goBackLable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
     goBackLable.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
         goBackLableMouseReleased(evt);
@@ -102,10 +104,11 @@ public class Track_View extends javax.swing.JFrame {
     infoTextArea.setEditable(false);
     infoTextArea.setColumns(20);
     infoTextArea.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+    infoTextArea.setForeground(new java.awt.Color(51, 51, 255));
     infoTextArea.setRows(5);
     jScrollPane2.setViewportView(infoTextArea);
 
-    verifySignatureButton.setBackground(new java.awt.Color(204, 204, 255));
+    verifySignatureButton.setBackground(new java.awt.Color(102, 102, 255));
     verifySignatureButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     verifySignatureButton.setText("Verify Signature");
     verifySignatureButton.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +117,7 @@ public class Track_View extends javax.swing.JFrame {
       }
     });
 
-    acceptOrderButton.setBackground(new java.awt.Color(204, 255, 204));
+    acceptOrderButton.setBackground(new java.awt.Color(51, 255, 51));
     acceptOrderButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     acceptOrderButton.setText("Accept Order");
     acceptOrderButton.addActionListener(new java.awt.event.ActionListener() {
@@ -175,8 +178,8 @@ public class Track_View extends javax.swing.JFrame {
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(70, 70, 70)
-            .addComponent(goBackLable, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(81, 81, 81)
+            .addComponent(goBackLable, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

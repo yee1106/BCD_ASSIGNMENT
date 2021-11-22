@@ -58,7 +58,7 @@ public class Login extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
 
-    jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+    jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
     jLabel2.setForeground(new java.awt.Color(102, 255, 204));

@@ -58,7 +58,7 @@ public class Add_Order extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
 
-    jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+    jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 2, 36)); // NOI18N
     jLabel1.setForeground(new java.awt.Color(255, 204, 204));
@@ -101,8 +101,10 @@ public class Add_Order extends javax.swing.JFrame {
     });
 
     goBackLable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    goBackLable.setForeground(new java.awt.Color(204, 255, 204));
     goBackLable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goBackIcon.png"))); // NOI18N
     goBackLable.setText("Go back");
+    goBackLable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 255, 204)));
     goBackLable.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseReleased(java.awt.event.MouseEvent evt) {
         goBackLableMouseReleased(evt);
@@ -118,7 +120,7 @@ public class Add_Order extends javax.swing.JFrame {
         .addComponent(goBackLable)
         .addGap(96, 96, 96)
         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(94, Short.MAX_VALUE))
+        .addContainerGap(92, Short.MAX_VALUE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(jPanel1Layout.createSequentialGroup()
