@@ -24,8 +24,8 @@ public class Patient extends User implements Serializable{
   private String dateVaccination;
   private String typeOfVaccine;
   private long batch_id;
-  private String vaccinationFacility;
-  private String witnessesName;
+  private String facility;
+  private String witnessName;
   private String digital_signature;
   
   public Patient() {
@@ -43,7 +43,7 @@ public class Patient extends User implements Serializable{
     this.batch_id = batch_id;
   }
 
-  public Patient(String fullName, String age, String ic, String contactNumber, String gender, String address, String status, String dateVaccination, String typeOfVaccine, long batch_id, String vaccinationFacility, String witnessesName) {
+  public Patient(String fullName, String age, String ic, String contactNumber, String gender, String address, String status, String dateVaccination, String typeOfVaccine, long batch_id, String facility, String witnessName) {
     this.fullName = fullName;
     this.age = age;
     this.ic = ic;
@@ -54,8 +54,8 @@ public class Patient extends User implements Serializable{
     this.dateVaccination = dateVaccination;
     this.typeOfVaccine = typeOfVaccine;
     this.batch_id = batch_id;
-    this.vaccinationFacility = vaccinationFacility;
-    this.witnessesName = witnessesName;
+    this.facility = facility;
+    this.witnessName = witnessName;
   }
   
   public String getFullName() {
@@ -139,19 +139,19 @@ public class Patient extends User implements Serializable{
   }
 
   public String getVaccinationFacility() {
-    return vaccinationFacility;
+    return facility;
   }
 
-  public void setVaccinationFacility(String vaccinationFacility) {
-    this.vaccinationFacility = vaccinationFacility;
+  public void setVaccinationFacility(String facility) {
+    this.facility = facility;
   }
 
   public String getWitnessesName() {
-    return witnessesName;
+    return witnessName;
   }
 
-  public void setWitnessesName(String witnessesName) {
-    this.witnessesName = witnessesName;
+  public void setWitnessesName(String witnessName) {
+    this.witnessName = witnessName;
   }
 
   public String getDigital_signature() {

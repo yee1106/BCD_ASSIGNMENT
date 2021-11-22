@@ -21,6 +21,7 @@ import static client.Main.register;
 import static client.Main.update_production_status;
 import static client.Main.patient_info;
 import static client.Main.patient_track;
+import static client.Main.patient_vaccination_record;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -216,6 +217,7 @@ public class Login extends javax.swing.JFrame {
   public void pageDisplayAfterLogin(){
     if(CLINIC_HEALTHCARE.equals(current_user.getRole())){
         clinic_healthcare = new Clinic_Healthcare_UI();
+        patient_vaccination_record = new Patient_Vaccination_Record();
         clinic_healthcare.configureOrderTable();
         clinic_healthcare.setVisible(true);
         addOrderPage = new Add_Order();

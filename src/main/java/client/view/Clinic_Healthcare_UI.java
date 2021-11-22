@@ -13,6 +13,7 @@ import static client.Main.addOrderPage;
 import static client.Main.userList;
 import static client.Main.MANUFACTURER;
 import static client.Main.current_user;
+import static client.Main.patient_vaccination_record;
 import static client.Main.track_view;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,8 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
     jScrollPane1 = new javax.swing.JScrollPane();
     orderTable = new javax.swing.JTable();
     track_view_button = new javax.swing.JButton();
-    jButton4 = new javax.swing.JButton();
+    logoutButton = new javax.swing.JButton();
+    addPatientRecordButton = new javax.swing.JButton();
 
     jTable1.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -130,13 +132,22 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
       }
     });
 
-    jButton4.setBackground(new java.awt.Color(255, 102, 102));
-    jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-    jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logoutIcon.png"))); // NOI18N
-    jButton4.setText(" Log Out");
-    jButton4.addActionListener(new java.awt.event.ActionListener() {
+    logoutButton.setBackground(new java.awt.Color(255, 102, 102));
+    logoutButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logoutIcon.png"))); // NOI18N
+    logoutButton.setText(" Log Out");
+    logoutButton.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton4ActionPerformed(evt);
+        logoutButtonActionPerformed(evt);
+      }
+    });
+
+    addPatientRecordButton.setBackground(new java.awt.Color(255, 204, 0));
+    addPatientRecordButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+    addPatientRecordButton.setText("Add Patient Record");
+    addPatientRecordButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addPatientRecordButtonActionPerformed(evt);
       }
     });
 
@@ -145,36 +156,37 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
     jPanel1Layout.setHorizontalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
-        .addContainerGap(30, Short.MAX_VALUE)
-        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-              .addComponent(addOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(track_view_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGap(86, 86, 86)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(52, 52, 52))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(125, 125, 125))))
+        .addContainerGap(181, Short.MAX_VALUE)
+        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(125, 125, 125))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        .addGap(29, 29, 29)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(track_view_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(addOrderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(addPatientRecordButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(52, 52, 52))
     );
     jPanel1Layout.setVerticalGroup(
       jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(jPanel1Layout.createSequentialGroup()
         .addGap(34, 34, 34)
         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(37, 37, 37)
         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(72, 72, 72)
+            .addGap(28, 28, 28)
             .addComponent(addOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(31, 31, 31)
+            .addGap(18, 18, 18)
             .addComponent(track_view_button, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(66, 66, 66)
-            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(jPanel1Layout.createSequentialGroup()
-            .addGap(37, 37, 37)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(18, 18, 18)
+            .addComponent(addPatientRecordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18)
+            .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addContainerGap(83, Short.MAX_VALUE))
     );
 
@@ -245,9 +257,15 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
    
   }//GEN-LAST:event_track_view_buttonActionPerformed
 
-  private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+  private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
     System.exit(0);
-  }//GEN-LAST:event_jButton4ActionPerformed
+  }//GEN-LAST:event_logoutButtonActionPerformed
+
+  private void addPatientRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientRecordButtonActionPerformed
+  patient_vaccination_record.setVisible(true);
+  patient_vaccination_record.setDefaultDate();
+  this.setVisible(false);
+  }//GEN-LAST:event_addPatientRecordButtonActionPerformed
 
   public void configureOrderTable(){
     productDetailTableSortByProductId();
@@ -332,12 +350,13 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton addOrderButton;
-  private javax.swing.JButton jButton4;
+  private javax.swing.JButton addPatientRecordButton;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JScrollPane jScrollPane2;
   private javax.swing.JTable jTable1;
+  private javax.swing.JButton logoutButton;
   private javax.swing.JTable orderTable;
   private javax.swing.JButton track_view_button;
   // End of variables declaration//GEN-END:variables

@@ -252,5 +252,41 @@
         }
       ]
     }
+  },
+  {
+    "header": {
+      "index": 7,
+      "currentHash": "558a610a03501ad0f10f3e325514ccc5cf8884697638feafba579ba9c54cddda",
+      "previousHash": "9fcd8b6b624017569c084e08ffec010de77a7979c6004094d753ae382535ea73",
+      "timeStamp": 1637595427409,
+      "merkleRootStr": "687b5261f8bd0305d159c21a6a896671409a3f547550de4150a5ba830f99b30f",
+      "batch_id": 10007,
+      "involvedPerson": [
+        "cli2",
+        "chew2"
+      ]
+    },
+    "tranx": {
+      "SIZE": 10,
+      "tranxLst": [
+        {
+          "order_batch_id": 10007,
+          "vaccineType": "Moderna",
+          "quantity": 1000,
+          "from": "cli2",
+          "to": "chew2",
+          "status": "Pending Order",
+          "date": "2021-11-22 23:36:39",
+          "digital_signature": "kKg14RiYgeQMB1SFqfUmENmsfzygFxyTRTaE1wWKRjo2JZr5M8/mLRoJe26UTTnp1Ug3Mpu3kWQCutvC3pQZJW1eREqLvbrSDuGGkvaMBY8JcaMSxd2DWwSnAIJI9FAmIQ5obYbixVksr5cGOik00mjB50FEro84QKX2TEQHj0A\u003d"
+        },
+        {
+          "actor": "chew2",
+          "status": "Approved Order",
+          "messages": "Order accepted. Preparing the vaccine.",
+          "date": "2021-11-22 23:37:07",
+          "digital_signature": "ink8ygwZADeIRaQEXMcaH1nF+/tbbmb1HzdgufInaqI0OCTMRt1iC4faOWNnMFasFyVtq1MOPotC0w+LtnfzElXjzJuZ2KFof8ucqe5wQvmuvT7I68OE8+EMDRHxtdtTUQ5FCNzPWCxY5qjmG8pdd10MY89b03re+AKoeJ7JYHU\u003d"
+        }
+      ]
+    }
   }
 ]

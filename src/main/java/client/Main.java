@@ -7,6 +7,7 @@ import client.view.Login;
 import client.view.Manufacturer_HomePage;
 import client.view.Patient_Appointment_Info;
 import client.view.Patient_Track;
+import client.view.Patient_Vaccination_Record;
 import client.view.Patient_View;
 import client.view.Register;
 import client.view.Track_View;
@@ -31,6 +32,7 @@ public class Main {
     public static Patient_View patient_view;
     public static Patient_Appointment_Info patient_appointment_info;
     public static Patient_Track patient_track;
+    public static Patient_Vaccination_Record patient_vaccination_record;
     public static String PATIENT = "Patient";
     public static String MANUFACTURER = "Manufacturer";
     public static String DISTRIBUTION = "Distribution";

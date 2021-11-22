@@ -86,7 +86,7 @@ public class Patient_Appointment_Info extends javax.swing.JFrame {
 
     jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
     jLabel4.setForeground(new java.awt.Color(204, 204, 255));
-    jLabel4.setText("IC/Passport:");
+    jLabel4.setText("IC:");
 
     jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
     jLabel5.setForeground(new java.awt.Color(204, 204, 255));
