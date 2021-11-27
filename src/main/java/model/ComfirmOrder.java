@@ -16,7 +16,7 @@ public class ComfirmOrder implements Serializable{
   private String actor;    // who accept / reject order
   private String status;   // Approved order || Rejected order
   private String messages; // Order accepted. Preparing the vaccine. || (writing some messages for reject the order). 
-  private String date;    
+  private String date;
   private String digital_signature;
   
   public ComfirmOrder() {

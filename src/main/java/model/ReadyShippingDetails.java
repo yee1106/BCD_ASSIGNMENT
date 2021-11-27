@@ -117,5 +117,16 @@ public class ReadyShippingDetails implements Serializable{
   public String readyShippingStepTrackToString(){
     return "Status = " + status +"\nExaminer = " + examiner + "\nProduction Date = " + productionDate + "\nStrong Temperature = " + storingTemperature + " degree" + "\nManufacturory Address = " + address + "\nManufacturer = " + from + "\nDistibution = " + to + "\nUpdate Date = " + date + "\nDigital Signature = " + digital_signature + "\n";
   }
+
+  public String shippingOrderInfo(){
+
+    String info = "" + "Examiner = " + examiner + "\n" +
+            "Production Date = " + productionDate + "\n" +
+            "Storing temperature = " + storingTemperature + "\n" +
+            "Manufacturer Address = " + address + "\n" +
+            "Status = " + status + "\n";
+
+    return info;
+  }
   
 }

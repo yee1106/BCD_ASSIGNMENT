@@ -1,17 +1,8 @@
 package client;
 
-import client.view.Add_Order;
-import client.view.Clinic_Healthcare_UI;
+import client.view.*;
 import model.User;
-import client.view.Login;
-import client.view.Manufacturer_HomePage;
-import client.view.Patient_Appointment_Info;
-import client.view.Patient_Track;
-import client.view.Patient_Vaccination_Record;
-import client.view.Patient_View;
-import client.view.Register;
-import client.view.Track_View;
-import client.view.Update_Production_Status;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import model.Patient;
@@ -19,8 +10,8 @@ import util.Blockchain;
 
 public class Main {
     
-    public static HashMap<String, String> userList = new HashMap();
-    public static ArrayList<Patient> patient_info = new ArrayList();
+    public static HashMap<String, String> userList = new HashMap<>();
+    public static ArrayList<Patient> patient_info = new ArrayList<>();
     public static Login login;
     public static Register register;
     public static User current_user;
@@ -33,6 +24,10 @@ public class Main {
     public static Patient_Appointment_Info patient_appointment_info;
     public static Patient_Track patient_track;
     public static Patient_Vaccination_Record patient_vaccination_record;
+    public static DistributorPage distributorPage;
+    public static DistributorViewOrderPage distributorViewOrderPage;
+    public static AcceptShippment acceptShippment;
+    public static UpdateShippingStatus updateShippingStatus;
     public static String PATIENT = "Patient";
     public static String MANUFACTURER = "Manufacturer";
     public static String DISTRIBUTION = "Distribution";

@@ -29,6 +29,7 @@ client\view\Clinic_Healthcare_UI$4.class
 client\view\Update_Production_Status$4.class
 util\AsymmCrypto.class
 util\Block$Header.class
+client\view\Patient_Vaccination_Record$1.class
 client\view\Add_Order$2.class
 util\KeyCreator\KeyPairMaker.class
 client\view\Track_View$4.class
@@ -55,12 +56,15 @@ client\view\Patient_View.class
 client\view\Login$3.class
 model\ComfirmOrder.class
 client\view\Add_Order$3.class
+client\view\Patient_Vaccination_Record$2.class
 client\view\Track_View$6.class
 client\view\Update_Production_Status$2.class
 client\view\Login$1.class
 util\Block.class
+client\view\Clinic_Healthcare_UI$6.class
 client\view\Patient_Appointment_Info$4.class
 model\Order.class
+client\view\Patient_Vaccination_Record.class
 client\view\Login.class
 util\Hasher.class
 client\view\Patient_Appointment_Info$1.class
@@ -70,3 +74,4 @@ client\Main.class
 client\view\Patient_View$3.class
 client\view\Track_View$2.class
 client\view\Add_Order$4.class
+client\view\Patient_Vaccination_Record$3.class
