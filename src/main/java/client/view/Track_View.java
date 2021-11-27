@@ -5,6 +5,7 @@
  */
 package client.view;
 
+import static client.Main.clinic_healthcare;
 import static client.Main.current_user;
 import static client.Main.manufacturerHomePage;
 import static client.Main.track_view;
@@ -17,7 +18,9 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.ComfirmOrder;
+import model.ConfirmShipping;
 import model.Order;
+import model.ShippingDetail;
 import util.Block;
 import util.Blockchain;
 import util.Hasher;
@@ -38,6 +41,7 @@ public class Track_View extends javax.swing.JFrame {
   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
   public String APPROVED_ORDER = "Approved Order";
   public String REJECTER_ORDER = "Rejected order";
+  boolean isClinicVerifiedDistribution;
   
   public Track_View() {
     initComponents();
@@ -224,11 +228,21 @@ public class Track_View extends javax.swing.JFrame {
   }//GEN-LAST:event_goBackLableMouseReleased
 
   private void verifySignatureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifySignatureButtonActionPerformed
-    if(verifyClinicOrderData()){
-      JOptionPane.showMessageDialog(null, "Order Transaction Data is correct!!"); 
+    if(!isClinicVerifiedDistribution){
+      if(verifyClinicOrderData()){
+        JOptionPane.showMessageDialog(null, "Order Transaction Data is correct!!"); 
+      }
+      else{
+        JOptionPane.showMessageDialog(null, "Order Transaction Data has been altered", "Data Incorrect", JOptionPane.ERROR_MESSAGE); 
+      }
     }
     else{
-      JOptionPane.showMessageDialog(null, "Order Transaction Data has been altered", "Data Incorrect", JOptionPane.ERROR_MESSAGE); 
+      if(verifyDistributionData()){
+        JOptionPane.showMessageDialog(null, "Distribution Transaction Data is correct!!"); 
+      }
+      else{
+        JOptionPane.showMessageDialog(null, "Order Transaction Data has been altered", "Data Incorrect", JOptionPane.ERROR_MESSAGE); 
+      }
     }
     
   }//GEN-LAST:event_verifySignatureButtonActionPerformed
@@ -335,6 +349,38 @@ public class Track_View extends javax.swing.JFrame {
     return isDataCorrect;
   }
   
+  private boolean verifyDistributionData(){
+    boolean isDataCorrect = false;
+    Block selectedBlock = clinic_healthcare.selectedBlock;
+    for(Object confirmShippingDetails : selectedBlock.getTranx().getTranxLst()){
+      if(confirmShippingDetails instanceof ConfirmShipping){
+        String hashUserName = Hasher.hash(((ConfirmShipping) confirmShippingDetails).getActor(), "SHA-256");
+        MySignature digitalSignature = new MySignature(hashUserName);
+        ConfirmShipping confirmShipping = ((ConfirmShipping) confirmShippingDetails);
+        String signature = confirmShipping.getDigitalSignature();
+        confirmShipping.setDigitalSignature(null);
+        isDataCorrect = digitalSignature.verify(confirmShipping.toString(), signature);
+        confirmShipping.setDigitalSignature(signature);
+        if(!isDataCorrect){
+          break;
+        }
+      }
+      if(confirmShippingDetails instanceof ShippingDetail){
+        String hashUserName = Hasher.hash(((ShippingDetail) confirmShippingDetails).getActor(), "SHA-256");
+        MySignature digitalSignature = new MySignature(hashUserName);
+        ShippingDetail shippingDetail = ((ShippingDetail) confirmShippingDetails);
+        String signature = shippingDetail.getDigitalSignature();
+        shippingDetail.setDigitalSignature(null);
+        isDataCorrect = digitalSignature.verify(confirmShippingDetails.toString(), signature);
+        shippingDetail.setDigitalSignature(signature);
+        if(!isDataCorrect){
+          break;
+        }
+      }
+    } 
+    return isDataCorrect;
+  }
+  
   public void setComeFromPage(JFrame comeFromPage, boolean isManufacturer){
     this.comeFromPage = comeFromPage;
     this.isManufacturer = isManufacturer;
@@ -354,6 +400,11 @@ public class Track_View extends javax.swing.JFrame {
   
   public void setStatusTrackText(String data){
     statusTrackTextArea.setText(data);
+  }
+  
+  public void isClinicVerify(boolean visible){
+    verifySignatureButton.setVisible(visible);
+    isClinicVerifiedDistribution = visible;
   }
   
   public String getStatusTrackText(){

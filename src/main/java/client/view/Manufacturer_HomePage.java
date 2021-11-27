@@ -16,8 +16,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import model.ComfirmOrder;
+import model.ConfirmShipping;
 import model.Order;
 import model.ReadyShippingDetails;
+import model.ShippingDetail;
 import util.Block;
 import util.Blockchain;
 
@@ -183,6 +185,11 @@ public class Manufacturer_HomePage extends javax.swing.JFrame {
             data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
             isReadyShippingStep = true;
           }
+          else if(statusTranx instanceof ConfirmShipping){
+            data = data + ((ConfirmShipping)statusTranx).statusTrackToString()+"\n";
+        } else if(statusTranx instanceof  ShippingDetail){
+            data = data + ((ShippingDetail)statusTranx).statusTrackToString()+"\n";
+        }
         }
         track_view.setStatusTrackText(data);
         hasInvolvedBlock = true;

@@ -145,6 +145,10 @@ public class Patient_Track extends javax.swing.JFrame {
     infoTextArea.setText(text);
   }
   
+  public void setTrackTextArea(String text){
+    statusTrackTextArea.setText(text);
+  }
+  
   public static void main(String args[]) {
     /* Set the Nimbus look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -188,7 +188,7 @@ public class Update_Production_Status extends javax.swing.JFrame {
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(43, 43, 43)
             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE))
           .addGroup(jPanel1Layout.createSequentialGroup()
             .addGap(0, 0, Short.MAX_VALUE)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,7 +231,7 @@ public class Update_Production_Status extends javax.swing.JFrame {
 
   private void comfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comfirmButtonActionPerformed
     if(!isTextFieldEmpty()){
-      ReadyShippingDetails readyShippingDeatils = new ReadyShippingDetails(examinerTextField.getText(), dateFormat.format(productionDateDateChooser.getDate()), temperatureTextField.getText(), addressTextArea.getText(), current_user.getUserName() ,distributionComboBox.getItemAt(0), READY_SHIPPING ,dateFormat.format(new Date()));
+      ReadyShippingDetails readyShippingDeatils = new ReadyShippingDetails(examinerTextField.getText(), dateFormat.format(productionDateDateChooser.getDate()), temperatureTextField.getText(), addressTextArea.getText(), current_user.getUserName() ,distributionComboBox.getSelectedItem().toString(), READY_SHIPPING ,dateFormat.format(new Date()));
     String hashUserName = Hasher.hash(current_user.getUserName(), "SHA-256");
      MySignature digitalSignature = new MySignature(hashUserName);
      readyShippingDeatils.setDigital_signature(digitalSignature.sign(readyShippingDeatils.toString()));

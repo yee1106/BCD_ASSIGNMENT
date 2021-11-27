@@ -6,10 +6,30 @@
 package client.view;
 
 import static client.Main.clinic_healthcare;
+import static client.Main.current_user;
+import static client.Main.patient_info;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.FileWriter;
+import java.io.ObjectOutputStream;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Patient;
+import model.PatientVaccinated;
+import model.ShippingDetail;
+import util.AsymmCrypto;
+import util.Block;
+import util.Blockchain;
+import util.Hasher;
+import util.MerkleTree;
+import util.MySignature;
 
 /**
  *
@@ -21,6 +41,12 @@ public class Patient_Vaccination_Record extends javax.swing.JFrame {
    * Creates new form Patient_Vaccination_Record
    */
   SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  public static String REGISTERED = "Registered";
+  String VACCINATED = "Vaccinated";
+  public Block selectedBlock;
+  private int selectedBatchQuantity;
+  public static String PATIENT_INFO_File_Path = "Patient_Info.txt";
+  
   public Patient_Vaccination_Record() {
     initComponents();
   }
@@ -55,6 +81,7 @@ public class Patient_Vaccination_Record extends javax.swing.JFrame {
     confirmButton = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
 
     jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -77,7 +104,7 @@ public class Patient_Vaccination_Record extends javax.swing.JFrame {
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
     jLabel2.setForeground(new java.awt.Color(255, 204, 204));
-    jLabel2.setText("IC:");
+    jLabel2.setText("UserName:");
 
     jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
     jLabel3.setForeground(new java.awt.Color(255, 204, 204));
@@ -246,7 +273,46 @@ public class Patient_Vaccination_Record extends javax.swing.JFrame {
 
   private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
     if(!isTextFieldEmpty()){
-      
+      if(isReached(Long.valueOf(batchIDTextField.getText()))){
+        if(!isOutOfQuantity(Long.valueOf(batchIDTextField.getText()))){
+          
+            Patient addPatient = new Patient();
+            for(Patient patient : patient_info){
+              if(patient.getUserName().equals(icComboBox.getSelectedItem().toString())){
+                patient.setBatch_id(Long.valueOf(batchIDTextField.getText()));
+                patient.setStatus(VACCINATED);
+                patient.setDateVaccination(dateFormat.format(dateVaccinatedDateChooser.getDate()));
+                patient.setTypeOfVaccine(typeVaccineTextField.getText());
+                patient.setWitnessesName(witnessNameTextField.getText());
+                patient.setVaccinationFacility(facilityTextArea.getText());
+                addPatient = patient;
+              }
+            }
+            String hashUserName = Hasher.hash(addPatient.getUserName(), "SHA-256");
+            MySignature digitalSignature = new MySignature(hashUserName);
+            addPatient.setDigital_signature(digitalSignature.sign(addPatient.addTrackTextAreaSetText()));
+            try {
+            AsymmCrypto asymmCrypto = new AsymmCrypto();
+            String cipherText = asymmCrypto.encrypt(addPatient.addTrackTextAreaSetText(), hashUserName);
+//            String plantext = asymmCrypto.decrypt(cipherText, hashUserName);
+//            System.out.println(cipherText);
+//            System.out.println(plantext);
+            updatePatientDetailsInFile(PATIENT_INFO_File_Path, patient_info);
+            updateBlockComfOrderTranx(Long.valueOf(batchIDTextField.getText()), icComboBox.getSelectedItem().toString(), cipherText);
+            JOptionPane.showMessageDialog(null, "Add patient data successful"); 
+            clinic_healthcare.setVisible(true);
+            this.setVisible(false);
+          } catch (Exception ex) {
+            Logger.getLogger(Patient_Vaccination_Record.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        }
+        else{
+          JOptionPane.showMessageDialog(null, "This batch of vaccine for patient is full", "Error Message", JOptionPane.ERROR_MESSAGE); 
+        }
+      }
+      else{
+        JOptionPane.showMessageDialog(null, "Vaccine have not reached clinic/Healthcare", "Empty or Not Valid", JOptionPane.ERROR_MESSAGE); 
+      }
     }
     else{
       JOptionPane.showMessageDialog(null, "Please fill up all the information correctly!!", "Empty or Not Valid", JOptionPane.ERROR_MESSAGE); 
@@ -257,8 +323,128 @@ public class Patient_Vaccination_Record extends javax.swing.JFrame {
     return (icComboBox.getSelectedItem() == null || typeVaccineTextField.getText().isBlank() || batchIDTextField.getText().isBlank() || witnessNameTextField.getText().isBlank() || facilityTextArea.getText().isBlank() || !dateVaccinatedDateChooser.isValid() || dateFormat.format(dateVaccinatedDateChooser.getDate()).isBlank());
   }
   
-  public void setDefaultDate(){
+  private void updatePatientDetailsInFile(String fileName, ArrayList<Patient> patientList){
+    try {
+        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+        for(Patient patient : patientList){
+          out.write(patient.getUserName() + "\n");            //username
+          out.write(patient.getStatus() + "\n");                            //status
+          out.write(patient.getBatch_id() + "\n");                                         //for the batch id
+          out.write(patient.getFullName() + "\n");                  //full name
+          out.write(patient.getAge() + "\n");                       //age
+          out.write(patient.getGender() + "\n");  //gender
+          out.write(patient.getIc() + "\n");                        //ic
+          out.write(patient.getContactNumber() + "\n");                   //contact number
+          out.write(patient.getAddress() + "\n");                    //address
+          out.write("\n"); 
+        }
+        out.close();
+      } catch (Exception ex) {} 
+  }
+  
+  private boolean isOutOfQuantity(long batch_ID){
+    for(Block block : Blockchain.DB){
+      if(batch_ID == block.getHeader().getBatch_id()){
+        selectedBlock = block;
+        for(Object tranxItem : block.getTranx().getTranxLst()){
+          if(tranxItem instanceof PatientVaccinated){
+            return selectedBatchQuantity <= ((PatientVaccinated) tranxItem).getPatient_vaccinated_list().size();
+          }
+        }
+        break;
+      }
+    }
+    return false;
+  }
+  
+  private boolean isReached(long batch_ID){
+    for(Block block : Blockchain.DB){
+      if(batch_ID == block.getHeader().getBatch_id()){
+        selectedBlock = block;
+        for(Object tranxItem : block.getTranx().getTranxLst()){
+          if(tranxItem instanceof ShippingDetail){
+            return true;
+          }
+        }
+        break;
+      }
+    }
+    return false;
+  }
+  
+  public void updateBlockComfOrderTranx(long batch_ID, String username, String encryptedPatientDetails){
+    boolean isBlockFound = false;
+    String previousHash = "";
+    boolean isPatientVaccinatedListExist = false;
+    for(Block block : Blockchain.DB){
+      if(!isBlockFound){
+        if(batch_ID == block.getHeader().getBatch_id()){
+          for(Object tranxObject : block.getTranx().getTranxLst()){
+            if(tranxObject instanceof PatientVaccinated){
+              ((PatientVaccinated) tranxObject).getPatient_vaccinated_list().put(username, encryptedPatientDetails);
+              isPatientVaccinatedListExist = true;
+              break;
+            }
+          }
+          if(!isPatientVaccinatedListExist){
+            PatientVaccinated patientVaccinatedInfo = new PatientVaccinated();
+            patientVaccinatedInfo.getPatient_vaccinated_list().put(username, encryptedPatientDetails);
+            block.getTranx().getTranxLst().add(patientVaccinatedInfo);
+          }
+//          block.getTranx().getTranxLst().add(tranx);
+          block.getHeader().setTimeStamp(new Timestamp( System.currentTimeMillis() ).getTime());
+          MerkleTree mt = MerkleTree.getInstance( block.getTranx().getTranxLst() );
+          mt.build();
+          block.getHeader().setMerkleRootStr(mt.getRoot());
+          block.getHeader().setCurrentHash(null);
+          block.getHeader().getInvolvedPerson().add(username);
+          byte[] blockBytes = getBytes( block );
+          block.getHeader().setCurrentHash(new String(Hasher.hash( blockBytes, "SHA-256" )));
+          
+          isBlockFound = true;
+          previousHash = block.getHeader().getCurrentHash();
+        }
+      }
+      else{
+        block.getHeader().setPreviousHash(previousHash);
+        block.getHeader().setTimeStamp(new Timestamp( System.currentTimeMillis() ).getTime());
+        block.getHeader().setCurrentHash(null);
+        byte[] blockBytes = getBytes( block );
+        block.getHeader().setCurrentHash(new String(Hasher.hash( blockBytes, "SHA-256" )));
+        previousHash = block.getHeader().getCurrentHash();
+      }
+    }
+    Blockchain.persist();
+    Blockchain.distribute();
+  }
+  
+  private byte[] getBytes( Block block ){
+
+        try( ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ObjectOutputStream out = new ObjectOutputStream( baos );
+        ) {
+            out.writeObject( block );
+            return baos.toByteArray();
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+
+    }
+  
+  public void configureAddPatietRecordPage(long batch_id, String typeOfVaccine, int quantity){
+    icComboBox.removeAllItems();
     dateVaccinatedDateChooser.setDate(new Date());
+    typeVaccineTextField.setText(typeOfVaccine);
+    batchIDTextField.setText(String.valueOf(batch_id));
+    selectedBatchQuantity = quantity;
+    witnessNameTextField.setText("");
+    facilityTextArea.setText("");
+    for(Patient patient : patient_info){
+      if(REGISTERED.equals(patient.getStatus())){
+        icComboBox.addItem(patient.getUserName());
+      }
+    }
   }
   
   /**

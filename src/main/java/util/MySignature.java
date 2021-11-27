@@ -20,15 +20,6 @@ public class MySignature {
      */
     private KeyPairGenerator keygen;
     private KeyPair keyPair;
-//    {
-//        try {
-//            keygen = KeyPairGenerator.getInstance(CRYPTO_ALGORITHM);
-//            keyPair = keygen.generateKeyPair();
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//    }
-    //END: DEMO
 
     public MySignature(String hashUsername) {
         try {

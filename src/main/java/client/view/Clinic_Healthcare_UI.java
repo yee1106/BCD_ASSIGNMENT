@@ -25,8 +25,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import model.ComfirmOrder;
+import model.ConfirmShipping;
 import model.Order;
 import model.ReadyShippingDetails;
+import model.ShippingDetail;
 import util.Block;
 import util.Blockchain;
 
@@ -38,6 +40,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
   DefaultTableModel tableModel;
   Object rowData[] = new Object[4];
   List<Block> currentUserInvolvedBlock;
+  public Block selectedBlock;
   
   public Clinic_Healthcare_UI() {
     initComponents();
@@ -218,6 +221,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
 
   private void track_view_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_track_view_buttonActionPerformed
    boolean hasInvolvedBlock = false;
+   boolean isArrived = false;
    int selectedRowIndex = orderTable.getSelectedRow();
    if(selectedRowIndex == -1 && currentUserInvolvedBlock.size() != 0){
      orderTable.setRowSelectionInterval(0, 0);
@@ -225,6 +229,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
    }
    for(Block block : currentUserInvolvedBlock){
      if(block.getHeader().getBatch_id() == (Long)orderTable.getValueAt(selectedRowIndex, 0)){
+       selectedBlock = block;
        String data = "";
        for(Object statusTranx : block.getTranx().getTranxLst()){
          if(statusTranx instanceof Order){
@@ -236,7 +241,13 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
          }
          else if(statusTranx instanceof ReadyShippingDetails){
             data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
-          }
+         }
+         else if(statusTranx instanceof ConfirmShipping){
+            data = data + ((ConfirmShipping)statusTranx).statusTrackToString()+"\n";
+        } else if(statusTranx instanceof  ShippingDetail){
+            data = data + ((ShippingDetail)statusTranx).statusTrackToString()+"\n";   
+            isArrived = true;
+        }
        }
        track_view.setStatusTrackText(data);
        hasInvolvedBlock = true;
@@ -247,6 +258,9 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
     track_view.setComeFromPage(this, false);
     this.setVisible(false);
     track_view.setVisible(true);
+    if(isArrived){
+      track_view.isClinicVerify(isArrived);
+    }
    }
    else if(!hasInvolvedBlock){
      JOptionPane.showMessageDialog(null, "No Record!!", "Error Message", JOptionPane.ERROR_MESSAGE); 
@@ -262,9 +276,25 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
   }//GEN-LAST:event_logoutButtonActionPerformed
 
   private void addPatientRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPatientRecordButtonActionPerformed
-  patient_vaccination_record.setVisible(true);
-  patient_vaccination_record.setDefaultDate();
-  this.setVisible(false);
+    if(currentUserInvolvedBlock.size() > 0){
+      int selectedRowIndex = orderTable.getSelectedRow();
+      if(selectedRowIndex == -1){
+        orderTable.setRowSelectionInterval(0, 0);
+        selectedRowIndex = 0;
+      }
+      for(Block block : currentUserInvolvedBlock){
+        if(block.getHeader().getBatch_id() == (Long)orderTable.getValueAt(selectedRowIndex, 0)){
+          patient_vaccination_record.configureAddPatietRecordPage(block.getHeader().getBatch_id(), String.valueOf(orderTable.getValueAt(selectedRowIndex, 1)), (Integer)orderTable.getValueAt(selectedRowIndex, 2));
+        }
+      }
+      patient_vaccination_record.setVisible(true);
+      
+      this.setVisible(false);
+    }
+    else{
+      JOptionPane.showMessageDialog(null, "No Record!!", "Error Message", JOptionPane.ERROR_MESSAGE); 
+    }
+  
   }//GEN-LAST:event_addPatientRecordButtonActionPerformed
 
   public void configureOrderTable(){

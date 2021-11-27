@@ -9,7 +9,21 @@ import static client.Main.current_user;
 import static client.Main.patient_appointment_info;
 import static client.Main.patient_info;
 import static client.Main.patient_track;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.ComfirmOrder;
+import model.ConfirmShipping;
+import model.Order;
 import model.Patient;
+import model.PatientVaccinated;
+import model.ReadyShippingDetails;
+import model.ShippingDetail;
+import util.AsymmCrypto;
+import util.Block;
+import util.Blockchain;
+import util.Hasher;
 /**
  *
  * @author acer
@@ -25,7 +39,8 @@ public class Patient_View extends javax.swing.JFrame {
   String VACCINATED = "Vaccinated";
   String current_user_status;
   public Patient current_patient_info = new Patient();
-  
+  String trackData = "";
+  String plaintext = "";
   
   public Patient_View() {
     initComponents();
@@ -151,12 +166,57 @@ public class Patient_View extends javax.swing.JFrame {
       this.setVisible(false);
     }
     else if(TRACK.equals(appointTracktButton.getText())){
+      getVaccineProcessData();
       patient_track.setVisible(true);
-      patient_track.setInfoTextArea(current_patient_info.infoTextAreaSetText());
+      patient_track.setInfoTextArea(current_patient_info.infoTextAreaSetText() + "\n" + plaintext);
+      patient_track.setTrackTextArea(trackData);
       this.setVisible(false);
     }
   }//GEN-LAST:event_appointTracktButtonActionPerformed
 
+  private void getVaccineProcessData(){
+    for(Block block : Blockchain.DB){
+      if(block.getHeader().getInvolvedPerson() != null){
+        if(block.getHeader().getInvolvedPerson().contains(current_user.getUserName())){
+          String data = "";
+          for(Object statusTranx : block.getTranx().getTranxLst()){
+            if(statusTranx instanceof Order){
+              data = data + ((Order) statusTranx).statusTrackToString() + "\n";
+            }
+            else if(statusTranx instanceof ComfirmOrder){
+              data = data + ((ComfirmOrder) statusTranx).statusTrackToString() + "\n";
+            }
+            else if(statusTranx instanceof ReadyShippingDetails){
+               data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
+            }
+            else if(statusTranx instanceof ConfirmShipping){
+               data = data + ((ConfirmShipping)statusTranx).statusTrackToString()+"\n";
+            } else if(statusTranx instanceof  ShippingDetail){
+               data = data + ((ShippingDetail)statusTranx).statusTrackToString()+"\n";   
+           }
+            else if(statusTranx instanceof PatientVaccinated){
+              HashMap<String,String> patient = ((PatientVaccinated) statusTranx).getPatient_vaccinated_list();
+              for(Map.Entry<String, String> set : patient.entrySet()){
+                if(set.getKey().equals(current_user.getUserName())){
+                  String hashUserName = Hasher.hash(current_user.getUserName(), "SHA-256");
+                  AsymmCrypto asymmCrypto = new AsymmCrypto();
+                  try {
+                    plaintext = asymmCrypto.decrypt(set.getValue(), hashUserName);
+                  } catch (Exception ex) {
+                    Logger.getLogger(Patient_View.class.getName()).log(Level.SEVERE, null, ex);
+                  }
+                  break;
+                }
+              }
+            }
+          }
+          trackData = data;
+          break;
+        }
+      }
+    }
+  }
+  
   public void configurePatientPage(){
     if(isCurrentPatientRegistered()){
       appointTracktButton.setText(TRACK);

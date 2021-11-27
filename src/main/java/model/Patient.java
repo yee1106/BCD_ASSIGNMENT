@@ -171,4 +171,8 @@ public class Patient extends User implements Serializable{
     return "Full Name = " + fullName +"\nAge = " + age + "\nGender = " + gender + "\nStatus = " + status + "\nIc/Passport = " + ic + "\nContactNumber = " + contactNumber + "\nAddress = " + address + "\n"; 
   }
   
+  public String addTrackTextAreaSetText(){
+    return "****Personal information****\nBatch ID = " + batch_id +"\nType of Vaccine = " + typeOfVaccine + "\nDate Vaccination = " + dateVaccination + "\nWitness Name = " + witnessName + "\nFacility = " + facility + "\nDigital Signature = " + digital_signature; 
+  }
+
 }

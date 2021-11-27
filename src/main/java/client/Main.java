@@ -36,7 +36,7 @@ public class Main {
     
     public static void main(String[] args) {
 
-      Blockchain.get();
+//      Blockchain.get();
       register = new Register();
       login = new Login();
       login.setVisible(true);

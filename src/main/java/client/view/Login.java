@@ -17,6 +17,7 @@ import model.Patient;
 import util.Hasher;
 
 import static client.Main.*;
+import util.Blockchain;
 
 /**
  * @author acer
@@ -174,6 +175,7 @@ public class Login extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         if (!usernameTextField.getText().isEmpty() && !String.valueOf(passwordTextField.getPassword()).isEmpty()) {
             if (isUserExist(usernameTextField.getText(), String.valueOf(passwordTextField.getPassword()))) {
+                Blockchain.get();
                 JOptionPane.showMessageDialog(null, current_user.getUserName() + ", login Success!!");
                 pageDisplayAfterLogin();
                 readAllUser();
@@ -206,6 +208,7 @@ public class Login extends javax.swing.JFrame {
             clinic_healthcare = new Clinic_Healthcare_UI();
             patient_vaccination_record = new Patient_Vaccination_Record();
             clinic_healthcare.configureOrderTable();
+            getPatientRecord();
             clinic_healthcare.setVisible(true);
             addOrderPage = new Add_Order();
         } else if (PATIENT.equals(current_user.getRole())) {
