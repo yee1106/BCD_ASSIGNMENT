@@ -37,10 +37,6 @@ public class Blockchain {
 
     //persist() : write the chain to the master-file
     public static void persist() {
-        /**
-         * Helper classes for persisting the object (LinkedList) to the binary-file
-         * 	1) FileOutputStream; 2) ObjectOutputStream
-         */
         Path path = Paths.get(CHAIN_FILE);
         try {
             Files.createDirectories(path.getParent());
@@ -64,10 +60,6 @@ public class Blockchain {
 
     //get() : retrieve the chain from the master-file
     public static LinkedList<Block> get() {
-        /**
-         * Helper classes for reading the object (LinkedList) from the binary-file
-         * 	1) FileInputStream; 2) ObjectInputStream
-         */
         FileInputStream fis = null;
         ObjectInputStream in = null;
         try {
@@ -91,7 +83,7 @@ public class Blockchain {
         return DB;
     }
 
-    //distribute() : printout the ledger records (demo)
+    //distribute() : printout the ledger records
     public static void distribute() {
         /**
          * convert the chain to the text form using Gson API

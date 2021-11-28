@@ -2,18 +2,12 @@ package util;
 
 import java.security.SecureRandom;
 import java.util.Base64;
-
 import org.apache.commons.codec.binary.Hex;
 
 public class Salt {
 
-    //simply, Random() - standard API for generating the random number (insecure)
-    //in security programming, we use SecureRandom() instead
-
     public static void main(String[] args) {
 
-//		Random rand = new Random();
-//		System.out.println( rand.nextInt() );
 
         byte[] salt = Salt.get( 16 );
         System.out.println( "encoded:"+ Base64.getEncoder().encodeToString( salt ) );

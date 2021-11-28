@@ -126,18 +126,16 @@ public class ShippingDetail implements Serializable {
     }
 
     public String statusTrackToString(){
-        StringBuilder builder = new StringBuilder("");
-        builder.append("Actor = ").append(actor).append("\n");
-        builder.append("Person In Charge = ").append(personInCharge).append("\n");
-        builder.append("Storing Temperature = ").append(storingTemperature).append("\n");
-        builder.append("Inventory Center = ").append(inventoryCenter).append("\n");
-        builder.append("From = ").append(from).append("\n");
-        builder.append("To = ").append(to).append("\n");
-        builder.append("Status = ").append(status).append("\n");
-        builder.append("Date = ").append(date).append("\n");
-        builder.append("Is Delivered = ").append(isDelivered).append("\n");
-        builder.append("Digital Signature = ").append(digitalSignature).append("\n");
-        return builder.toString();
+        return "" + "Actor = " + actor + "\n" +
+                "Person In Charge = " + personInCharge + "\n" +
+                "Storing Temperature = " + storingTemperature + "\n" +
+                "Inventory Center = " + inventoryCenter + "\n" +
+                "From = " + from + "\n" +
+                "To = " + to + "\n" +
+                "Status = " + status + "\n" +
+                "Date = " + date + "\n" +
+                "Is Delivered = " + isDelivered + "\n" +
+                "Digital Signature = " + digitalSignature + "\n";
     }
 
 

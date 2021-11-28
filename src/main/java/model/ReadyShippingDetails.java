@@ -120,13 +120,11 @@ public class ReadyShippingDetails implements Serializable{
 
   public String shippingOrderInfo(){
 
-    String info = "" + "Examiner = " + examiner + "\n" +
+    return "" + "Examiner = " + examiner + "\n" +
             "Production Date = " + productionDate + "\n" +
             "Storing temperature = " + storingTemperature + "\n" +
             "Manufacturer Address = " + address + "\n" +
             "Status = " + status + "\n";
-
-    return info;
   }
   
 }

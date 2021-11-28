@@ -213,7 +213,6 @@ public class Login extends javax.swing.JFrame {
             addOrderPage = new Add_Order();
         } else if (PATIENT.equals(current_user.getRole())) {
             getPatientRecord();
-            System.out.println(patient_info);
             patient_view = new Patient_View();
             patient_view.configurePatientPage();
             patient_appointment_info = new Patient_Appointment_Info();
@@ -229,7 +228,7 @@ public class Login extends javax.swing.JFrame {
             distributorViewOrderPage = new DistributorViewOrderPage();
             distributorPage.setVisible(true);
             distributorPage.configureOrderTable();
-            acceptShippment = new AcceptShippment();
+            acceptShipment = new AcceptShipment();
             updateShippingStatus = new UpdateShippingStatus();
 
         }

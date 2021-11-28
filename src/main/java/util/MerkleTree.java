@@ -42,19 +42,13 @@ public class MerkleTree {
         return instance;
     }
 
-    /**
-     * @implNote
-     * Build merkle tree
-     *
-     * @implSpec
-     * + build() : void
-     */
+
     public void build() {
 
         List<Object> tempLst = new ArrayList<>();
 
         for (Object tranx : this.tranxLst) {
-            tempLst.add(tranx);
+            tempLst.add(Hasher.hash(String.valueOf(tranx),"SHA-256"));
         }
 
         List<String> hashes = genTranxHashLst( tempLst );

@@ -24,7 +24,7 @@ import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import model.ComfirmOrder;
+import model.ConfirmOrder;
 import model.ConfirmShipping;
 import model.Order;
 import model.ReadyShippingDetails;
@@ -38,7 +38,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
    * Creates new form Clinic_Healthcare_UI
    */
   DefaultTableModel tableModel;
-  Object rowData[] = new Object[4];
+  Object[] rowData = new Object[4];
   List<Block> currentUserInvolvedBlock;
   public Block selectedBlock;
   
@@ -227,6 +227,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
      orderTable.setRowSelectionInterval(0, 0);
      selectedRowIndex = 0;
    }
+   //Get the selected order and load the status and info to next page
    for(Block block : currentUserInvolvedBlock){
      if(block.getHeader().getBatch_id() == (Long)orderTable.getValueAt(selectedRowIndex, 0)){
        selectedBlock = block;
@@ -236,8 +237,8 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
             data = data + ((Order) statusTranx).statusTrackToString() + "\n";
             track_view.setInfoTrackText(((Order) statusTranx).infoTrackToString());
          }
-         else if(statusTranx instanceof ComfirmOrder){
-            data = data + ((ComfirmOrder) statusTranx).statusTrackToString() + "\n";
+         else if(statusTranx instanceof ConfirmOrder){
+            data = data + ((ConfirmOrder) statusTranx).statusTrackToString() + "\n";
          }
          else if(statusTranx instanceof ReadyShippingDetails){
             data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
@@ -249,6 +250,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
             isArrived = true;
         }
        }
+       //set the track text field with all tracking data
        track_view.setStatusTrackText(data);
        hasInvolvedBlock = true;
        break;
@@ -284,7 +286,7 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
       }
       for(Block block : currentUserInvolvedBlock){
         if(block.getHeader().getBatch_id() == (Long)orderTable.getValueAt(selectedRowIndex, 0)){
-          patient_vaccination_record.configureAddPatietRecordPage(block.getHeader().getBatch_id(), String.valueOf(orderTable.getValueAt(selectedRowIndex, 1)), (Integer)orderTable.getValueAt(selectedRowIndex, 2));
+          patient_vaccination_record.configureAddPatientRecordPage(block.getHeader().getBatch_id(), String.valueOf(orderTable.getValueAt(selectedRowIndex, 1)), (Integer)orderTable.getValueAt(selectedRowIndex, 2));
         }
       }
       patient_vaccination_record.setVisible(true);
@@ -297,10 +299,11 @@ public class Clinic_Healthcare_UI extends javax.swing.JFrame {
   
   }//GEN-LAST:event_addPatientRecordButtonActionPerformed
 
+  //Load the block data into the table
   public void configureOrderTable(){
     productDetailTableSortByProductId();
     List<Block> blockchain = Blockchain.DB;
-    currentUserInvolvedBlock = new ArrayList();
+    currentUserInvolvedBlock = new ArrayList<>();
     blockchain.forEach(block ->{
       if(block.getHeader().getInvolvedPerson() != null){
         for(String userName : block.getHeader().getInvolvedPerson()){

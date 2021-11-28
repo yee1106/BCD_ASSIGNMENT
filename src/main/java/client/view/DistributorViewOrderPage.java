@@ -4,7 +4,6 @@
  */
 package client.view;
 
-import model.ComfirmOrder;
 import model.ConfirmShipping;
 import model.Order;
 import model.ReadyShippingDetails;
@@ -224,7 +223,7 @@ public class DistributorViewOrderPage extends javax.swing.JFrame {
 
     private void acceptOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptOrderButtonActionPerformed
         setVisible(false);
-        acceptShippment.setVisible(true);
+        acceptShipment.setVisible(true);
     }//GEN-LAST:event_acceptOrderButtonActionPerformed
 
     private void declineOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineOrderButtonActionPerformed

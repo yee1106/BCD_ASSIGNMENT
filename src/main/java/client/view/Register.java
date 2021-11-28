@@ -194,7 +194,7 @@ public class Register extends javax.swing.JFrame {
   private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
     if(!userNameTextField.getText().isEmpty() && !String.valueOf(passwordTextField.getPassword()).isEmpty()){
       if(createRegisterData(userNameTextField.getText(), String.valueOf(passwordTextField.getPassword()),roleComboBox.getSelectedItem().toString())){
-        JOptionPane.showMessageDialog(null, "Register Successfull!!");
+        JOptionPane.showMessageDialog(null, "Register Successful!!");
         //generate key pair for register user
         String hashUserName = Hasher.hash(userNameTextField.getText(), "SHA-256");
         KeyPairMaker.create(hashUserName);

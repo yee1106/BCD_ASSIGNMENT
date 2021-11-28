@@ -8,9 +8,7 @@ public class Transaction implements Serializable{
 
     private final int SIZE = 10;
 
-    //array or collection
-    //String[] tranxLst;
-    List<Object> tranxLst; //simple demo...
+    List<Object> tranxLst;
 
     public Transaction() {
         tranxLst = new ArrayList<>( SIZE );

@@ -3,7 +3,6 @@ package util.KeyCreator;
 import util.Configuration;
 
 import java.security.*;
-import java.nio.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -18,7 +17,7 @@ public class KeyPairMaker {
     //constructor
     public KeyPairMaker() {
         try {
-            keygen = KeyPairGenerator.getInstance( Configuration.PUBLICKEY_ALGORITHM );
+            keygen = KeyPairGenerator.getInstance( Configuration.RSA_ALGORITHM);
             keygen.initialize( 1024 , new SecureRandom() );
         } catch (Exception e) {
             e.printStackTrace();

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.ComfirmOrder;
+import model.ConfirmOrder;
 import model.ConfirmShipping;
 import model.Order;
 import model.Patient;
@@ -183,8 +183,8 @@ public class Patient_View extends javax.swing.JFrame {
             if(statusTranx instanceof Order){
               data = data + ((Order) statusTranx).statusTrackToString() + "\n";
             }
-            else if(statusTranx instanceof ComfirmOrder){
-              data = data + ((ComfirmOrder) statusTranx).statusTrackToString() + "\n";
+            else if(statusTranx instanceof ConfirmOrder){
+              data = data + ((ConfirmOrder) statusTranx).statusTrackToString() + "\n";
             }
             else if(statusTranx instanceof ReadyShippingDetails){
                data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
@@ -202,8 +202,7 @@ public class Patient_View extends javax.swing.JFrame {
                   AsymmCrypto asymmCrypto = new AsymmCrypto();
                   try {
                     plaintext = asymmCrypto.decrypt(set.getValue(), hashUserName);
-                  } catch (Exception ex) {
-                    Logger.getLogger(Patient_View.class.getName()).log(Level.SEVERE, null, ex);
+                  } catch (Exception ignored) {
                   }
                   break;
                 }
@@ -224,7 +223,7 @@ public class Patient_View extends javax.swing.JFrame {
         messageTextPane.setText("Please wait for vaccination!!");
       }
       else{
-        messageTextPane.setText("You can track your vaccine suppy chain process!!");
+        messageTextPane.setText("You can track your vaccine supply chain process!!");
       }
     }
     else{
@@ -249,7 +248,7 @@ public class Patient_View extends javax.swing.JFrame {
     messageTextPane.setText(text);
   }
   
-  public void setAppointTracktButton(String label){
+  public void setAppointTrackButton(String label){
     appointTracktButton.setText(label);
   }
   

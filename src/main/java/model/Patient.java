@@ -172,7 +172,7 @@ public class Patient extends User implements Serializable{
   }
   
   public String addTrackTextAreaSetText(){
-    return "****Personal information****\nBatch ID = " + batch_id +"\nType of Vaccine = " + typeOfVaccine + "\nDate Vaccination = " + dateVaccination + "\nWitness Name = " + witnessName + "\nFacility = " + facility + "\nDigital Signature = " + digital_signature; 
+    return "****Digital Certificate for COVID-19 Vaccination ****\nBatch ID = " + batch_id +"\nType of Vaccine = " + typeOfVaccine + "\nDate Vaccination = " + dateVaccination + "\nWitness Name = " + witnessName + "\nFacility = " + facility + "\nDigital Signature = " + digital_signature;
   }
 
 }

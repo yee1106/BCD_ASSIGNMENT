@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author acer
  */
-public class ComfirmOrder implements Serializable{
+public class ConfirmOrder implements Serializable{
   
   private String actor;    // who accept / reject order
   private String status;   // Approved order || Rejected order
@@ -19,10 +19,10 @@ public class ComfirmOrder implements Serializable{
   private String date;
   private String digital_signature;
   
-  public ComfirmOrder() {
+  public ConfirmOrder() {
   }
 
-  public ComfirmOrder(String actor, String status, String messages, String date) {
+  public ConfirmOrder(String actor, String status, String messages, String date) {
     this.actor = actor;
     this.status = status;
     this.messages = messages;

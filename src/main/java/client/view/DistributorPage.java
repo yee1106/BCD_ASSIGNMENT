@@ -177,12 +177,11 @@ public class DistributorPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewTrackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTrackButtonActionPerformed
+
         boolean hasInvolvedBlock = false;
-        boolean isComfirmOrder = false;
-        boolean isReadyShippingStep = false;
-        boolean isUpdatedButtonVisible = false;
         boolean isConfirmShipping = false;
         boolean isShipping = false;
+
         int selectedRowIndex = orderTable.getSelectedRow();
         if (selectedRowIndex == -1 && currentUserInvolvedBlock.size() != 0) {
             orderTable.setRowSelectionInterval(0, 0);
@@ -197,13 +196,11 @@ public class DistributorPage extends javax.swing.JFrame {
                     if (statusTranx instanceof Order) {
                         data = data + ((Order) statusTranx).statusTrackToString() + "\n";
                         info = info + ((Order) statusTranx).manufacturerInfoTrackToString() + "\n";
-                    } else if (statusTranx instanceof ComfirmOrder) {
-                        data = data + ((ComfirmOrder) statusTranx).statusTrackToString() + "\n";
-                        //String status = ((ComfirmOrder) statusTranx).getStatus();
+                    } else if (statusTranx instanceof ConfirmOrder) {
+                        data = data + ((ConfirmOrder) statusTranx).statusTrackToString() + "\n";
                     } else if (statusTranx instanceof ReadyShippingDetails) {
                         data = data + ((ReadyShippingDetails) statusTranx).readyShippingStepTrackToString() + "\n";
                         info = info + ((ReadyShippingDetails) statusTranx).shippingOrderInfo() + "\n";
-                        isReadyShippingStep = true;
                     } else if(statusTranx instanceof ConfirmShipping){
                         data = data + ((ConfirmShipping)statusTranx).statusTrackToString()+"\n";
                         isConfirmShipping = true;
@@ -222,11 +219,14 @@ public class DistributorPage extends javax.swing.JFrame {
         if (hasInvolvedBlock) {
             this.setVisible(false);
             distributorViewOrderPage.setVisible(true);
-            //track_view.setComeFromPage(this, true);
+            if(!isConfirmShipping){
+                distributorViewOrderPage.updateTrackingButton.setVisible(false);
+            }
             if(isConfirmShipping){
                 distributorViewOrderPage.acceptOrderButton.setVisible(false);
                 distributorViewOrderPage.declineOrderButton.setVisible(false);
                 distributorViewOrderPage.verifySignatureButton.setVisible(false);
+                distributorViewOrderPage.updateTrackingButton.setVisible(true);
             }
             if(isShipping){
                 distributorViewOrderPage.updateTrackingButton.setVisible(false);

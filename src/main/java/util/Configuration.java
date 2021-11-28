@@ -9,7 +9,7 @@ public class Configuration {
     /**
      * Asymmetric key algorithm
      */
-    public static final String PUBLICKEY_ALGORITHM = "RSA";
+    public static final String RSA_ALGORITHM = "RSA";
 
     /**
      * Keystore directory path

@@ -8,17 +8,9 @@ import util.KeyCreator.KeyAccess;
 
 public class MySignature {
 
-    /**
-     * Signature API from java.security package
-     */
+
     private Signature signature;
 
-    private final String CRYPTO_ALGORITHM = "RSA";
-
-    /**
-     * START: DEMO
-     */
-    private KeyPairGenerator keygen;
     private KeyPair keyPair;
 
     public MySignature(String hashUsername) {

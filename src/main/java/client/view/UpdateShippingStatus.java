@@ -42,13 +42,13 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        goBackLable = new javax.swing.JLabel();
+        goBackLabel = new javax.swing.JLabel();
         dateChooser = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         statusTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        comfirmButton = new javax.swing.JButton();
+        confirmButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         addressTextArea = new javax.swing.JTextArea();
         NACheckBox = new javax.swing.JCheckBox();
@@ -61,14 +61,14 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 204, 204));
         jLabel1.setText("Update Shipping Status");
 
-        goBackLable.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        goBackLable.setForeground(new java.awt.Color(255, 153, 153));
-        goBackLable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goBackIcon.png"))); // NOI18N
-        goBackLable.setText("Go back");
-        goBackLable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 102)));
-        goBackLable.addMouseListener(new java.awt.event.MouseAdapter() {
+        goBackLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        goBackLabel.setForeground(new java.awt.Color(255, 153, 153));
+        goBackLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/goBackIcon.png"))); // NOI18N
+        goBackLabel.setText("Go back");
+        goBackLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 102, 102)));
+        goBackLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                goBackLableMouseReleased(evt);
+                goBackLabelMouseReleased(evt);
             }
         });
 
@@ -89,12 +89,12 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 255, 153));
         jLabel5.setText("Inventory Address: ");
 
-        comfirmButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        comfirmButton.setForeground(new java.awt.Color(153, 153, 255));
-        comfirmButton.setText("Comfirm Update");
-        comfirmButton.addActionListener(new java.awt.event.ActionListener() {
+        confirmButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        confirmButton.setForeground(new java.awt.Color(153, 153, 255));
+        confirmButton.setText("Confirm Update");
+        confirmButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comfirmButtonActionPerformed(evt);
+                confirmButtonActionPerformed(evt);
             }
         });
 
@@ -120,14 +120,14 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(goBackLable)))
+                        .addComponent(goBackLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(343, 343, 343)
-                        .addComponent(comfirmButton, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
+                        .addComponent(confirmButton, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -148,7 +148,7 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(goBackLable)
+                .addComponent(goBackLabel)
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +164,7 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(94, 94, 94)
-                .addComponent(comfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(confirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -183,12 +183,12 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void goBackLableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackLableMouseReleased
+    private void goBackLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBackLabelMouseReleased
         this.setVisible(false);
         distributorViewOrderPage.setVisible(true);
-    }//GEN-LAST:event_goBackLableMouseReleased
+    }//GEN-LAST:event_goBackLabelMouseReleased
 
-    private void comfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comfirmButtonActionPerformed
+    private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         if(!isInputEmpty()){
             Order currentOrder = getCurrentOrder();
             ConfirmShipping confirmShipping = getCurrentConfirmShipping();
@@ -215,15 +215,11 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(null, "Please fill up all the information!!", "Empty message", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_comfirmButtonActionPerformed
+    }//GEN-LAST:event_confirmButtonActionPerformed
 
     private void NACheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_NACheckBoxItemStateChanged
         // TODO add your handling code here:
-        if(NACheckBox.isSelected()){
-            dateChooser.setEnabled(false);
-        }else{
-            dateChooser.setEnabled(true);
-        }
+        dateChooser.setEnabled(!NACheckBox.isSelected());
     }//GEN-LAST:event_NACheckBoxItemStateChanged
 
     private boolean isInputEmpty(){
@@ -299,9 +295,9 @@ public class UpdateShippingStatus extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox NACheckBox;
     private javax.swing.JTextArea addressTextArea;
-    private javax.swing.JButton comfirmButton;
+    private javax.swing.JButton confirmButton;
     private com.toedter.calendar.JDateChooser dateChooser;
-    private javax.swing.JLabel goBackLable;
+    private javax.swing.JLabel goBackLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

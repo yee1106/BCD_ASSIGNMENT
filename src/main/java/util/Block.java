@@ -7,46 +7,43 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Block implements Serializable{
+public class Block implements Serializable {
 
     private Header header;
     private Transaction tranx;
 
-    //overloaded constructor
-    public Block( String previousHash ) {
+    public Block(String previousHash) {
         this.header = new Header();
         this.header.previousHash = previousHash;
-        this.header.timeStamp = new Timestamp( System.currentTimeMillis() ).getTime();
-        //for now, hard-coded merkle root
+        this.header.timeStamp = new Timestamp(System.currentTimeMillis()).getTime();
         this.header.batch_id = 10000;
         this.header.involvedPerson = null;
         this.header.merkleRootStr = null;
-        byte[] blockBytes = getBytes( this );
-        this.header.currentHash = Hasher.hash( blockBytes, "SHA-256" );
+        byte[] blockBytes = getBytes(this);
+        this.header.currentHash = Hasher.hash(blockBytes, "SHA-256");
     }
-    
-    public Block( int index, String previousHash, long batch_id, String username, String nextStepUser, Transaction tranx, String merkleRootStr) { 
+
+    public Block(int index, String previousHash, long batch_id, String username, String nextStepUser, Transaction tranx, String merkleRootStr) {
         this.header = new Header();
         this.header.index = index;
         this.header.previousHash = previousHash;
         this.header.batch_id = batch_id;
-        this.header.involvedPerson = new ArrayList();
+        this.header.involvedPerson = new ArrayList<>();
         this.header.involvedPerson.add(username);
         this.header.involvedPerson.add(nextStepUser);
-        this.header.timeStamp = new Timestamp( System.currentTimeMillis() ).getTime();
-        //for now, hard-coded merkle root
+        this.header.timeStamp = new Timestamp(System.currentTimeMillis()).getTime();
         this.header.merkleRootStr = merkleRootStr;
         this.tranx = tranx;
-        byte[] blockBytes = getBytes( this );
-        this.header.currentHash = Hasher.hash( blockBytes, "SHA-256" );
+        byte[] blockBytes = getBytes(this);
+        this.header.currentHash = Hasher.hash(blockBytes, "SHA-256");
     }
 
     public void setTranx(Transaction tranx) {
         this.tranx = tranx;
     }
-    
+
     public Transaction getTranx() {
-      return tranx;
+        return tranx;
     }
 
     public Header getHeader() {
@@ -61,54 +58,51 @@ public class Block implements Serializable{
         private String previousHash;
         private long timeStamp;
         private String merkleRootStr;
+
+        //The order batch id and involved person are added to the header
         private long batch_id;
         private ArrayList<String> involvedPerson;
 
-        //getset methods
-      public String getMerkleRootStr() {
-        return merkleRootStr;
-      }
+        //get set methods...
+        public String getMerkleRootStr() {
+            return merkleRootStr;
+        }
 
-      public void setMerkleRootStr(String merkleRootStr) {
-        this.merkleRootStr = merkleRootStr;
-      }
-      
-      public void setMerkleRootStr(List<Object> tranxLst) {
-        MerkleTree mt = MerkleTree.getInstance( tranxLst );
-        mt.build();
-        this.merkleRootStr = mt.getRoot();
-      }
-      
-      public long getBatch_id() {
-        return batch_id;
-      }
+        public void setMerkleRootStr(String merkleRootStr) {
+            this.merkleRootStr = merkleRootStr;
+        }
 
-      public void setBatch_id(int batch_id) {
-        this.batch_id = batch_id;
-      }
+        public void setMerkleRootStr(List<Object> tranxLst) {
+            MerkleTree mt = MerkleTree.getInstance(tranxLst);
+            mt.build();
+            this.merkleRootStr = mt.getRoot();
+        }
 
-      public ArrayList<String> getInvolvedPerson() {
-        return involvedPerson;
-      }
+        public long getBatch_id() {
+            return batch_id;
+        }
 
-      public void setInvolvedPerson(ArrayList<String> involvedPerson) {
-        this.involvedPerson = involvedPerson;
-      }
+        public void setBatch_id(int batch_id) {
+            this.batch_id = batch_id;
+        }
+
+        public ArrayList<String> getInvolvedPerson() {
+            return involvedPerson;
+        }
+
+        public void setInvolvedPerson(ArrayList<String> involvedPerson) {
+            this.involvedPerson = involvedPerson;
+        }
+
         public int getIndex() {
             return index;
         }
 
-//        @Override
-//        public String toString() {
-//            return "Header [index=" + index + ", currentHash=" + currentHash + ", previousHash=" + previousHash
-//                    + ", timeStamp=" + timeStamp + "]";
-//        }
-
-            @Override
+        @Override
         public String toString() {
-          return "Header{" + "index=" + index + ", currentHash=" + currentHash + ", previousHash=" + previousHash + ", timeStamp=" + timeStamp + ", merkleRootStr=" +                 merkleRootStr + ", batch_id=" + batch_id + ", involvedPerson=" + involvedPerson + '}';
+            return "Header{" + "index=" + index + ", currentHash=" + currentHash + ", previousHash=" + previousHash + ", timeStamp=" + timeStamp + ", merkleRootStr=" + merkleRootStr + ", batch_id=" + batch_id + ", involvedPerson=" + involvedPerson + '}';
         }
-    
+
         public void setIndex(int index) {
             this.index = index;
         }
@@ -138,16 +132,15 @@ public class Block implements Serializable{
         }
 
 
-
     }
 
-    //getBytes( Block ) : byte[]
-    private byte[] getBytes( Block block ){
 
-        try( ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             ObjectOutputStream out = new ObjectOutputStream( baos );
+    private byte[] getBytes(Block block) {
+
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ObjectOutputStream out = new ObjectOutputStream(baos);
         ) {
-            out.writeObject( block );
+            out.writeObject(block);
             return baos.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();
